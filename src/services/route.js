@@ -13,6 +13,7 @@ import {
     createTag,
     listTags,
     deleteTag,
+    addComment,
 } from '../controllers/crudTag';
 
 const publicClientRouter = Router();
@@ -33,6 +34,7 @@ privateClientRouter.route('/places/save').post(savePlace);
 privateClientRouter.route('/tags/create').post(createTag);
 privateClientRouter.route('/tags/delete').post(deleteTag);
 privateClientRouter.route('/tags/list').get(listTags);
+privateClientRouter.route('/tags/comment').put(addComment);
 
 export {
     publicClientRouter,
