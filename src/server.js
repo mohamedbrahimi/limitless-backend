@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import config from './config/settings';
+
+import {  publicClientRouter, privateClientRouter, } from './services/route';
 const app = express();
 
 const port = process.env.PORT || config.server.port;
@@ -33,6 +35,17 @@ mongoose.connect(config.mongodb.uri,
     }
 );
 const connection = mongoose.connection;
+
+app.use(allowCrossDomain);
+app.use('/api/v1/public/b2c/client', publicClientRouter);
+
+app.use('*', (req, res, next) => {
+    console.error('url not valid');
+    return res.status(404).json({
+        success: false,
+        errorMessageKey: 'URL_NOT_FOUND',
+    });
+});
 
 connection.once('open',
     () => {
