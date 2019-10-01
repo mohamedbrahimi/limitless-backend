@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import checkUserField from '../middlewars/user/checkUserRequiredFields'
+import checkExisted from '../middlewars/user/checkUniqueIndexes'
 import {
     registerUser,
     loginUser
@@ -18,7 +19,7 @@ const privateClientRouter = Router();
 
 
 // PUBLIC API
-publicClientRouter.route('/register').post(checkUserField, registerUser); // Add new user
+publicClientRouter.route('/register').post(checkUserField, checkExisted, registerUser); // Add new user
 publicClientRouter.route('/login').post(loginUser); // login
 
 
