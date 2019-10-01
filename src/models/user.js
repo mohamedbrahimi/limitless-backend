@@ -82,7 +82,7 @@ const User = new Schema(
 );
 
 const hashedPassword = (password) => {
-  const salt = bcrypt.genSaltSync(SALT_ROUNDS);
+  const salt = bcrypt.genSaltSync();
   return bcrypt.hashSync(password, salt);
 };
 
@@ -101,4 +101,4 @@ User.methods.isValidPassword = function isValidPassword(password) {
 User.index({ lastLoginAt: -1 });
 
 export { User };
-export default mongoose.model('user', User, 'user');
+export default mongoose.model('user', User, 'users');
