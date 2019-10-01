@@ -85,8 +85,31 @@ async function deleteTag(req, res) {
 async function addComment(req, res) {
   const { tagId, desc, rating } = req.body;
   const { user } = req.userdata;
-  const tag = Tag.findOne({ _id: tagId });
-  let listOfComments = (tag.comments && tag.comments.length > 0) ? tag.comments.push({ user, desc, rating }) : [];
+  const tag = await Tag.findOne({ _id: tagId });
+
+  if (tag) {
+    const comment = { user, desc, rating };
+    if (tag.comments && tag.comments.length > 0)
+      tag.comments.push({ user, desc, rating })
+    else
+      tag.comments = [{ user, desc, rating }]
+
+    tag.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "comment added successfully"
+    })
+  } else {
+      return res.status(401).json({
+        success: false,
+        error: 'Tag not found',
+        errorKey: 'TAG_NOT_FOUND',
+      })
+  }
+
+
+
 
 }
 
@@ -94,4 +117,5 @@ export {
   createTag,
   deleteTag,
   listTags,
+  addComment
 };
