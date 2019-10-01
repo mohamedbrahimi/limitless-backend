@@ -11,16 +11,13 @@ const Place = new Schema(
       default: ''
     },
     location: {
-      type: { type: String, default: 'Point' },
-      coordinates: {
-        lat: {
-          type: Number,
-          default: 0,
-        },
-        lng: {
-          type: Number,
-          default: 0,
-        },
+      lat: {
+        type: Number,
+        default: 0,
+      },
+      lng: {
+        type: Number,
+        default: 0,
       },
     },
     title: {
