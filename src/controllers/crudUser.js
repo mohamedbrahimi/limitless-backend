@@ -68,8 +68,31 @@ async function loginUser(req, res, next) {
 }
 
 
+async function loadUserSelf(req, res, next) {
+
+
+    const { user } = req.userdata;
+
+    const doc = await User.findOne({ _id: user }, 'username email phone').lean();
+
+
+    if ( !doc )
+        return res.status(404).json(
+            {
+                error: true,
+                errormessage: "not data to return",
+                errormessageKey: "EMPTY_DATA"
+            }
+        )
+
+    res.json(doc);
+
+}
+
+
 
 export {
     registerUser,
-    loginUser
+    loginUser,
+    loadUserSelf
 };
