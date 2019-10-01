@@ -13,7 +13,7 @@ const Place = new Schema(
       type: { type: String, default: 'Point' },
       coordinates: [],
     },
-    name: {
+    title: {
       type: String,
       required: false,
     },
