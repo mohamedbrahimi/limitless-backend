@@ -29,7 +29,11 @@ const Tag = new Schema(
                 default: 0
             }
         }
-    ]
+    ],
+    image: {
+      type: String,
+      default: 'https://i.imgur.com/DQRyNFr.jpg',
+    }
   },
 );
 
