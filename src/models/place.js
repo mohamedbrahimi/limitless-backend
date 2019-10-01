@@ -28,6 +28,10 @@ const Place = new Schema(
       type: String,
       required: false,
     },
+    image: {
+      type: String,
+      default: 'https://i.imgur.com/DQRyNFr.jpg',
+    }
   },
 );
 
