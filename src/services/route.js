@@ -24,11 +24,11 @@ publicClientRouter.route('/login').post(loginUser); // login
 
 // PRIVATE API
 //Places:
-privateClientRouter.route('places/save').post(savePlace);
+privateClientRouter.route('/places/save').post(savePlace);
 //Tags:
-privateClientRouter.route('tags/create').post(createTag);
-privateClientRouter.route('tags/delete').post(deleteTag);
-privateClientRouter.route('tags/list').post(listTags);
+privateClientRouter.route('/tags/create').post(createTag);
+privateClientRouter.route('/tags/delete').post(deleteTag);
+privateClientRouter.route('/tags/list').post(listTags);
 
 export {
     publicClientRouter,

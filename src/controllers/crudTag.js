@@ -5,34 +5,36 @@ import Tag from '../models/tag';
 async function createTag(req, res) {
 
   const user = req.userdata;
-  const { place } = req.body;
+  const { location, name, title, desciption } = req.body;
 
-  if (!place.coordinates.lat || !place.coordinates.lng) {
+  if (!location.lat || !location.lng) {
     return res.status(400).json({
       success: false,
-      error: 'Place coordinates is not valid',
-      errorKey: 'PLACE_COORDINATES_NOT_VALID',
+      error: 'Place location is not valid',
+      errorKey: 'PLACE_LOCATION_NOT_VALID',
     });
   }
 
   try {
-    let place = Place.findOne({
-      'location.coordinates': place.coordinates,
-      ...(place.name) && { name: place.name },
+    let place = await Place.findOne({
+      location: location,
+      ...(name) && { name },
     })
 
     if (!place) {
-      place = await new Place.create({
-        'location.coordinates': place.coordinates,
-        ...(place.name) && { name: place.name },
-        ...(place.title) && { title: place.title },
-        ...(place.desciption) && { description: place.desciption },
-      })
+      const newPlace = new Place({
+        location: location,
+        ...(name) && { name },
+        ...(title) && { title },
+        ...(desciption) && { desciption },
+      });
+      await newPlace.save();
+      place = newPlace;
     }
 
-    const tag = await new Tag.create({
+    const tag = await Tag.create({
       place: place.id,
-      user: user._id,
+      user: user.user,
     })
 
     return res.status(201).json(tag);
@@ -44,18 +46,16 @@ async function createTag(req, res) {
       errorKey: 'PLACE_CREATE_ERROR',
     });
   }
-
 }
 
 async function listTags(res, req) {
 
   const user = req.userdata;
-  const { userId } = req.body;
 
   const tagsSharedWithUser = user.sharedTags;
   let tagsList = await Tag.find({
     $or: [
-      { user: userId },
+      { user: user.user },
       {
         $in: tagsSharedWithUser
       }
