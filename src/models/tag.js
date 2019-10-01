@@ -13,6 +13,10 @@ const Tag = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'place',
     }, // to do : add partial index on business
+    image: {
+      type: String,
+      default: 'https://i.imgur.com/DQRyNFr.jpg',
+    }
   },
 );
 
