@@ -8,6 +8,7 @@ import {
 } from '../controllers/crudPlace';
 import {
     createTag,
+    listTags,
 } from '../controllers/crudTag';
 
 const publicClientRouter = Router();
@@ -23,6 +24,7 @@ publicClientRouter.route('/register').post(checkUserField, registerUser); // Add
 privateClientRouter.route('places/save').post(savePlace);
 //Tags:
 privateClientRouter.route('tags/create').post(createTag);
+privateClientRouter.route('tags/list').post(listTags);
 
 export {
     publicClientRouter,

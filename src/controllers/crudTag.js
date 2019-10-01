@@ -56,6 +56,30 @@ async function createTag(req, res) {
 
 }
 
+async function listTags(res, req) {
+  const { userId } = req.body;
+  if (!userId) {
+    return res.status(400).json({
+      success: false,
+      error: 'User ID required',
+      errorKey: 'USER_ID_REQUIRED',
+    });
+  }
+
+  const user = await User.findOne({ _id: userId }).lean();
+  const tagsSharedWithUser = user.sharedTags;
+  let tagsList = await Tag.find({
+    $or: [
+      { user: userId },
+      {
+        $in: tagsSharedWithUser
+      }
+    ]
+  }).populate('place').lean();
+  return tagsList;
+}
+
 export {
   createTag,
+  listTags,
 };

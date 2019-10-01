@@ -25,12 +25,21 @@ const User = new Schema(
     },
     password: {
       type: String,
-      // required: 'password is required',
+      required: 'Passsword is required',
+      minlength: 8,
+      maxlength: 50,
       // match: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,16}$/,
     },
-    position: {
-      type: String,
-    },
+
+    sharedTags: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: 'user',
+        },
+      },
+    ],
+
     email_validation: {
       blocked: {
         type: Boolean,
@@ -44,34 +53,6 @@ const User = new Schema(
     is_verified: {
       type: Boolean,
       default: false,
-    },
-    blacklisted: {
-      is_blocked: {
-        type: Boolean,
-        default: false,
-      },
-      duration: { type: Number, default: 0 },
-      reason: { type: String },
-      blocked_by: { type: String },
-      blocked_at: { type: Date },
-    },
-    permissions: {
-      isSuperAdmin: {
-        type: Boolean,
-        default: false,
-      },
-      isAdmin: {
-        type: Boolean,
-        default: false,
-      },
-      autoApproval: {
-        type: Boolean,
-        default: false,
-      },
-      byPassBalance: {
-        type: Boolean,
-        default: false,
-      },
     },
     lastLoginAt: {
       type: Date,
