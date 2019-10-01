@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import config from './config/settings';
+import checkUser from './middlewars/user/checkUser'
 
 import {  publicClientRouter, privateClientRouter, } from './services/route';
 const app = express();
@@ -45,7 +46,9 @@ const allowCrossDomain = function (req, res, next) {
 };
 
 app.use(allowCrossDomain);
+
 app.use('/api/v1/public/b2c/client', publicClientRouter);
+app.use('/api/v1/public/b2c/places', checkUser, privateClientRouter);
 
 app.use('*', (req, res, next) => {
     console.error('url not valid');
