@@ -43,7 +43,8 @@
     "redis": "^2.8.0",
     "redis-smq": "^1.0.22",
     "source-map-support": "^0.5.13",
-    "ajv-errors": "^1.0.1"
+    "ajv-errors": "^1.0.1",
+    "jsonwebtoken": "^8.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
