@@ -7,11 +7,21 @@ const Place = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: false,
+      default: ''
     },
     location: {
       type: { type: String, default: 'Point' },
-      coordinates: [],
+      coordinates: {
+        lat: {
+          type: Number,
+          default: 0,
+        },
+        lng: {
+          type: Number,
+          default: 0,
+        },
+      },
     },
     title: {
       type: String,
