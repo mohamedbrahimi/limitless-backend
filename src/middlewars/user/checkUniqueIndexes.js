@@ -1,7 +1,9 @@
+//import
 module.exports = (req, res, next) => {
     try {
 
-        console.log(req.body)
+        const userBody = req.body;
+        // const exist =
         next();
     } catch (error) {
         return res.status(501).json({
