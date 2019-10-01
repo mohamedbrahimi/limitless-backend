@@ -27,6 +27,7 @@ async function createTag(req, res) {
         ...(name) && { name },
         ...(title) && { title },
         ...(description) && { description },
+        ...(image) && { image },
       });
       await newPlace.save();
       place = newPlace;
@@ -35,7 +36,6 @@ async function createTag(req, res) {
     const tag = await Tag.create({
       place: place.id,
       user: user.user,
-      ...(image) && { image },
     })
 
     return res.status(201).json(tag);
