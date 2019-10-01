@@ -10,6 +10,7 @@ import {
 import {
     createTag,
     listTags,
+    deleteTag,
 } from '../controllers/crudTag';
 
 const publicClientRouter = Router();
@@ -25,6 +26,7 @@ publicClientRouter.route('/users/register').post(schemaValidator.validate({ body
 privateClientRouter.route('places/save').post(savePlace);
 //Tags:
 privateClientRouter.route('tags/create').post(createTag);
+privateClientRouter.route('tags/delete').post(deleteTag);
 privateClientRouter.route('tags/list').post(listTags);
 
 export {
