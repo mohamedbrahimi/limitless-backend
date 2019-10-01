@@ -4,13 +4,13 @@ import mongoose from 'mongoose';
 import config from './config/settings';
 import checkUser from './middlewars/user/checkUser'
 
-import {  publicClientRouter, privateClientRouter, } from './services/route';
+import { publicClientRouter, privateClientRouter, } from './services/route';
 const app = express();
 
 const port = process.env.PORT || config.server.port;
 
-app.use(express.json({limit: '5mb'}));
-app.use(express.urlencoded({limit: '5mb', extended: true}));
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
 const corsOptions = {
     origin: '*',
@@ -22,11 +22,12 @@ app.use(cors());
 app.options('*', cors());
 
 mongoose.connect(config.mongodb.uri,
-    {   autoReconnect:true,
+    {
+        autoReconnect: true,
         poolSize: 20,
         socketTimeoutMS: 480000,
         keepAlive: 300000,
-        keepAliveInitialDelay : 300000,
+        keepAliveInitialDelay: 300000,
         connectTimeoutMS: 30000,
         reconnectTries: Number.MAX_VALUE,
         reconnectInterval: 1000,
@@ -48,7 +49,7 @@ const allowCrossDomain = function (req, res, next) {
 app.use(allowCrossDomain);
 
 app.use('/api/v1/public/b2c/client', publicClientRouter);
-app.use('/api/v1/public/b2c/places', checkUser, privateClientRouter);
+app.use('/api/v1/private/b2c/client', checkUser, privateClientRouter);
 
 app.use('*', (req, res, next) => {
     console.error('url not valid');
