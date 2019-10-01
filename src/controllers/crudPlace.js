@@ -22,6 +22,7 @@ async function savePlace(req, res) {
       ...(name) && { name },
       ...(title) && { title },
       ...(description) && { description },
+      ...(image) && { image },
       location: locationObj
     })
 
