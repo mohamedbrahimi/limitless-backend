@@ -3,7 +3,8 @@ import checkUserField from '../middlewars/user/checkUserRequiredFields'
 import checkExisted from '../middlewars/user/checkUniqueIndexes'
 import {
     registerUser,
-    loginUser
+    loginUser,
+    loadUserSelf
 } from '../controllers/crudUser';
 import {
     savePlace,
@@ -24,6 +25,8 @@ publicClientRouter.route('/login').post(loginUser); // login
 
 
 // PRIVATE API
+// user profile
+privateClientRouter.route('/self').get(loadUserSelf);
 //Places:
 privateClientRouter.route('/places/save').post(savePlace);
 //Tags:
