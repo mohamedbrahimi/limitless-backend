@@ -48,16 +48,16 @@ async function createTag(req, res) {
   }
 }
 
-async function listTags(res, req) {
+async function listTags(req, res) {
 
   const user = req.userdata;
 
-  const tagsSharedWithUser = user.sharedTags;
+  const tagsSharedWithUser = user.sharedTags || [];
   let tagsList = await Tag.find({
     $or: [
       { user: user.user },
       {
-        $in: tagsSharedWithUser
+        _id: { $in: tagsSharedWithUser }
       }
     ]
   }).populate('place').lean();
