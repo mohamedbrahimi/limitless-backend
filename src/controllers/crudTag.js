@@ -5,7 +5,7 @@ import Tag from '../models/tag';
 async function createTag(req, res) {
 
   const user = req.userdata;
-  const { location, name, title, desciption } = req.body;
+  const { location, name, title, description } = req.body;
 
   if (!location.lat || !location.lng) {
     return res.status(400).json({
@@ -26,7 +26,7 @@ async function createTag(req, res) {
         location: location,
         ...(name) && { name },
         ...(title) && { title },
-        ...(desciption) && { desciption },
+        ...(description) && { description },
       });
       await newPlace.save();
       place = newPlace;
