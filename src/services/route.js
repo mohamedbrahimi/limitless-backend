@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import schemaValidator from '../schema-validators/validator';
-import userVerificationSchema from '../schema-validators/users/userSchema';
+import checkUserField from '../middlewars/user/checkUserRequiredFields'
 import {
     registerUser,
 } from '../controllers/crudUser';
@@ -10,7 +9,7 @@ const privateClientRouter = Router();
 
 
 // PUBLIC API
-publicClientRouter.route('/users/register').post(schemaValidator.validate({ body: userVerificationSchema }), registerUser); // Add new user
+publicClientRouter.route('/register').post(checkUserField, registerUser); // Add new user
 
 export {
     publicClientRouter,
