@@ -65,7 +65,7 @@ async function listTags(req, res) {
 }
 
 
-async function deleteTag(res, req) {
+async function deleteTag(req, res) {
   const { tagId } = req.body;
   const tag = await Tag.findOne({ _id: tagId });
 
@@ -80,6 +80,14 @@ async function deleteTag(res, req) {
   return res.status(200).json({
     success: true
   });
+}
+
+async function addComment(req, res) {
+  const { tagId, desc, rating } = req.body;
+  const { user } = req.userdata;
+  const tag = Tag.findOne({ _id: tagId });
+  let listOfComments = (tag.comments && tag.comments.length > 0) ? tag.comments.push({ user, desc, rating }) : [];
+
 }
 
 export {
