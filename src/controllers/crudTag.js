@@ -4,7 +4,8 @@ import Tag from '../models/tag';
 
 async function createTag(req, res) {
 
-  const { place, userId } = req.body;
+  const user = req.userdata;
+  const { place } = req.body;
 
   if (!place.coordinates.lat || !place.coordinates.lng) {
     return res.status(400).json({
@@ -29,22 +30,12 @@ async function createTag(req, res) {
       })
     }
 
-    const user = User.findOne({ _id: userId })
-
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        error: 'User not found',
-        errorKey: 'USER_NOT_FOUND',
-      });
-    }
-
     const tag = await new Tag.create({
       place: place.id,
-      user: userId,
+      user: user._id,
     })
 
-    return res.status(200).json(tag);
+    return res.status(201).json(tag);
 
   } catch (e) {
     return res.status(400).json({
@@ -57,16 +48,10 @@ async function createTag(req, res) {
 }
 
 async function listTags(res, req) {
-  const { userId } = req.body;
-  if (!userId) {
-    return res.status(400).json({
-      success: false,
-      error: 'User ID required',
-      errorKey: 'USER_ID_REQUIRED',
-    });
-  }
 
-  const user = await User.findOne({ _id: userId }).lean();
+  const user = req.userdata;
+  const { userId } = req.body;
+
   const tagsSharedWithUser = user.sharedTags;
   let tagsList = await Tag.find({
     $or: [
@@ -76,10 +61,29 @@ async function listTags(res, req) {
       }
     ]
   }).populate('place').lean();
-  return tagsList;
+  return res.status(200).json(tagsList);
+}
+
+
+async function deleteTag(res, req) {
+  const { tagId } = req.body;
+  const tag = await Tag.findOne({ _id: tagId });
+
+  if (!tag) {
+    return res.status(400).json({
+      success: false,
+      error: 'Tag not found',
+      errorKey: 'TAG_NOT_FOUND',
+    })
+  }
+  tag.remove();
+  return res.status(200).json({
+    success: true
+  });
 }
 
 export {
   createTag,
+  deleteTag,
   listTags,
 };
