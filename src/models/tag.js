@@ -13,14 +13,6 @@ const Tag = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'place',
     }, // to do : add partial index on business
-    sharedWith: [
-      {
-        user: {
-          type: Schema.Types.ObjectId,
-          ref: 'user',
-        }, 
-      }, 
-    ]
   },
 );
 
