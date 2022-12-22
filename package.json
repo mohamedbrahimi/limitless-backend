@@ -38,7 +38,7 @@
     "express": "^4.17.1",
     "express-json-validator-middleware": "^2.0.0",
     "express-validator": "^6.2.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "jwt-simple": "^0.5.6 ",
     "moment": "^2.24.0",
     "mongoose": "^5.7.5",
